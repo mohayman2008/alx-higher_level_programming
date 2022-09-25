@@ -23,18 +23,18 @@ int is_palindrome(listint_t **head)
 	while (current)
 		len++, current = current->next;
 
-	list = malloc(len * sizeof(*list));
+	list = malloc((len / 2 + 1) * sizeof(*list));
 	if (!list)
 		return (0);
 
 	current = *head;
 	while (current)
-		list[i] = current->n, current = current->next, i++;
-
-	for (i = 0 ; i < len / 2 ; i++)
 	{
-		if (list[i] != list[len - i - 1])
+		if (i <= len / 2)
+			list[i] = current->n;
+	        if (i >= len / 2 && list[len - i - 1] != current->n)
 			return (0);
+		current = current->next, i++;
 	}
 
 	return (1);
