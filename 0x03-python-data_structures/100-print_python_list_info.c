@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sys/types.h>
+#include <pyport.h>
 #include <object.h>
 #include <listobject.h>
 
