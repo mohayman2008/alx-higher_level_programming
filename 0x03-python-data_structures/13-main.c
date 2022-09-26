@@ -39,6 +39,8 @@ int main(void)
 	else
 		printf("Linked list is not a palindrome\n");
 
+	print_listint(head);
+	putchar('\n');
 	free_listint(head);
 
 	head = NULL;
@@ -59,6 +61,8 @@ int main(void)
 	else
 		printf("Linked list is not a palindrome\n");
 
+	print_listint(head);
+	putchar('\n');
 	free_listint(head);
 
 		head = NULL;
@@ -79,6 +83,8 @@ int main(void)
 	else
 		printf("Linked list is not a palindrome\n");
 
+	print_listint(head);
+	putchar('\n');
 	free_listint(head);
 
 	head = NULL;
@@ -98,6 +104,8 @@ int main(void)
 	else
 		printf("Linked list is not a palindrome\n");
 
+	print_listint(head);
+	putchar('\n');
 	free_listint(head);
 
 	return (0);
