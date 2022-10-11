@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <sys/types.h>
-#include <time.h>
 #include <pyport.h>
+#include <assert.h>
 #include <object.h>
 #include <unicodeobject.h>
 #include <tupleobject.h>
 #include <structseq.h>
-#include <pystrtod.h>
 #include <listobject.h>
 #include <bytesobject.h>
 #include <floatobject.h>
+#include <pystrtod.h>
 #include <string.h>
 
 void print_python_bytes(PyObject *p)
@@ -47,9 +47,9 @@ void print_python_float(PyObject *p)
 
 	if (PyFloat_Check(p))
 	{
-	        float_obj = (PyFloatObject *) p;
+		float_obj = (PyFloatObject *) p;
 		printf("  value: %s\n", PyOS_double_to_string(float_obj->ob_fval,
-							'r', 0, Py_DTSF_ADD_DOT_0, Py_DTST_FINITE));
+							'r', 0, Py_DTSF_ADD_DOT_0, NULL));
 	}
 	else
 		printf("  [ERROR] Invalid Float Object\n");
