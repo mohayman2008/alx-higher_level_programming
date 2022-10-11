@@ -41,8 +41,6 @@ void print_python_bytes(PyObject *p)
 void print_python_float(PyObject *p)
 {
 	PyFloatObject *float_obj;
-//	PyObject *info/*, *element*/;
-//	PyStructSequence_Desc *seq;
 
 	setbuf(stdout, NULL);
 	printf("[.] float object info\n");
@@ -50,19 +48,8 @@ void print_python_float(PyObject *p)
 	if (PyFloat_Check(p))
 	{
 	        float_obj = (PyFloatObject *) p;
-/*	        info = PyFloat_GetInfo();
-		seq = (PyStructSequence_Desc *) info;
-		for (int i = 0 ; i < PySequence_Size(info) ; i++)
-		{
-			element = PySequence_GetItem(info, i);
-			printf("PySequence_GetItem\n",);
-		}
-*/
-/*		printf("seq is at %p\n", (void *)seq);
-		printf("its type is %s\n", info->ob_type->tp_name);
-		printf("name = %s\n doc = %s\n", seq->name, seq->doc);*/
-		printf("  value: %s\n", PyOS_double_to_string(float_obj->ob_fval,
-							'r', 0, Py_DTSF_ADD_DOT_0, Py_DTST_FINITE));
+/*		printf("  value: %s\n", PyOS_double_to_string(float_obj->ob_fval,
+		'r', 0, Py_DTSF_ADD_DOT_0, Py_DTST_FINITE));*/
 	}
 	else
 		printf("  [ERROR] Invalid Float Object\n");
