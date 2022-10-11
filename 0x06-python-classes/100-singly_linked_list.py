@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """Singly Linked List Implementaion
 """
+
+
 class Node:
     """Node of a singly linked list of integers
-
     """
     def __init__(self, data, next_node=None):
         """Initialize the Node object
@@ -13,10 +14,14 @@ class Node:
 
     @property
     def data(self):
+        """Returns the value of attribute 'data'
+        """
         return self.__data
 
     @data.setter
     def data(self, value):
+        """Sets the value of attribute 'data'
+        """
         if not isinstance(value, int):
             raise TypeError("data must be an integer")
         else:
@@ -24,27 +29,34 @@ class Node:
 
     @property
     def next_node(self):
+        """Returns the next node
+        """
         return self.__next_node
 
     @next_node.setter
     def next_node(self, value):
+        """Assign value to the attribute 'next_node'
+        """
         if not isinstance(value, Node) and value is not None:
             raise TypeError("next_node must be a Node object")
         else:
             self.__next_node = value
+
     def __str__(self):
-        """
+        """Returns the string representain of the node's data
         """
         return str(self.data)
     pass
 
+
 class SinglyLinkedList:
-    """
+    """Singly Linked List Class
     """
     def __init__(self):
         """ Initialize the linked list
         """
-        self.__head = None;
+        self.__head = None
+
     def __str__(self):
         """Prints the elements of the list (one node per line)
         """
@@ -57,6 +69,7 @@ class SinglyLinkedList:
                 if current:
                     string += "\n"
         return string
+
     def sorted_insert(self, value):
         """inserts a new Node into the correct sorted position in the list
         """
