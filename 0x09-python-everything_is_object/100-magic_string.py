@@ -1,4 +1,4 @@
 #!/usr/bin/python3
-def magic_string():
-    __annotations__["s"] = __annotations__.get("s", "") + "BestSchool, "
-    return (__annotations__["s"][:-2])
+def magic_string(ds={}):
+    ds["s"] = ds.get("s", "") + "BestSchool, "
+    return (ds["s"][:-2])
