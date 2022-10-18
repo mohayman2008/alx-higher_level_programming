@@ -1,4 +1,9 @@
 #!/usr/bin/python3
-def magic_string(ds={}):
-    ds["s"] = ds.get("s", "") + "BestSchool, "
-    return (ds["s"][:-2])
+"""Module containing the definition of LockedClass"""
+
+
+class LockedClass:
+    """Class not allowing any attribute except it's name is "first_name\""""
+
+    __slots__ = ["first_name"]
+    pass
