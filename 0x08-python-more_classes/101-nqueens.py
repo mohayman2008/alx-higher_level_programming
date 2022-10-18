@@ -62,22 +62,20 @@ class QueensChessBoard:
         return (x, y)
 
     def check_safety(self, x, y):
-        """Checks if a board cell is not under attack"""
-        for i in range(self.size):
+        """Checks if a board cell isn't under attack regarding previous rows"""
+        for i in range(x):
             if self.board[i][y]:
                 return False
-        for j in range(self.size):
-            if self.board[x][j]:
-                return False
+
         i, j = self.diag_origin(x, y)
-        while i < self.size and j < self.size:
+        while i < x and j < y:
             if self.board[i][j]:
                 return False
             i += 1
             j += 1
 
         i, j = self.rev_diag_origin(self.size, x, y)
-        while i < self.size and j >= 0:
+        while i < x and j > y:
             if self.board[i][j]:
                 return False
             i += 1
@@ -99,21 +97,19 @@ class QueensChessBoard:
             print(sol)
         pass
 
-    def solve(self, x0=0, n=0):
+    def solve(self, x=0, n=0):
         """Find solutions for the N-Queens problem"""
         if n == self.size:
-            return
-        for x in range(x0, self.size):
-            for y in range(self.size):
-                if (self.check_safety(x, y)):
-                    self.board[x][y] = 1
-                    n += 1
-                    if n == self.size:
-                        self.solutions.append(self.get_queens())
-                    self.solve(x + 1, n)
-                    self.board[x][y] = 0
-                    n -= 1
-            return
+            self.solutions.append(self.get_queens())
+
+        for y in range(self.size):
+            if (self.check_safety(x, y)):
+                self.board[x][y] = 1
+                n += 1
+                self.solve(x + 1, n)
+                self.board[x][y] = 0
+                n -= 1
+        return
 
     def __str__(self):
         """Return the board string representaion"""
