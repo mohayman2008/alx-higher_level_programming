@@ -1,0 +1,35 @@
+#def add_integer(a, b=98):
+
+>>> add_integer = __import__('0-add_integer').add_integer
+>>> add_integer(80)
+178
+
+>>> add_integer(80, 671)
+751
+
+>>> add_integer([])
+Traceback (most recent call last):
+	  ...
+TypeError: a must be an integer
+
+>>> add_integer(75, "hi")
+Traceback (most recent call last):
+	  ...
+TypeError: b must be an integer
+
+>>> add_integer(("hello",), "hi")
+Traceback (most recent call last):
+	  ...
+TypeError: a must be an integer
+
+>>> add_integer(20.5, 30.8)
+50
+
+>>> add_integer(-30.5, -2.2)
+-32
+
+>>> add_integer(-15)
+83
+
+>>> add_integer(0, 0)
+0

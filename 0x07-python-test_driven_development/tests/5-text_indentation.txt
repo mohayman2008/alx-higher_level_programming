@@ -1,0 +1,30 @@
+#def text_indentation(text):
+
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+>>> text_indentation("\n\n\vx.y?z:  \r")
+x.
+<BLANKLINE>
+y?
+<BLANKLINE>
+z:
+<BLANKLINE>
+
+
+>>> text_indentation(())
+Traceback (most recent call last):
+	  ...
+TypeError: text must be a string
+
+
+>>> text_indentation("")
+
+
+>>> text_indentation("??.:")
+?
+<BLANKLINE>
+?
+<BLANKLINE>
+.
+<BLANKLINE>
+:
+<BLANKLINE>
