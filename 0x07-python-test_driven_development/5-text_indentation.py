@@ -8,8 +8,14 @@ def text_indentation(text):
 
     if type(text) is not str:
         raise TypeError("text must be a string")
+
     text = text.strip()
-    text = text.replace(".", ".\n\n").replace("?", "?\n\n")
-    text = text.replace(":", ":\n\n")
+    for a in (".", "?", ":"):
+        ax = a + ' '
+        new = text.replace(ax, a)
+        while new != text:
+            text = new
+            new = text.replace(ax, a)
+        text = text.replace(a, a + "\n\n")
     print(text, end="")
     pass
