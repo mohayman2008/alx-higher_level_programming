@@ -69,25 +69,25 @@ ValueError: shapes (1,0) and (2,1) not aligned: 0 (dim 1) != 2 (dim 0)
 >>> matrix_mul([[81], "51", [92]], [[6], [()]])
 Traceback (most recent call last):
 	  ...
-ValueError: setting an array element with a sequence.
+ValueError: setting an array element with a sequence
 
 
 >>> matrix_mul([[81], "51"], [[6], [()]])
 Traceback (most recent call last):
 	  ...
-ValueError: setting an array element with a sequence.
+ValueError: setting an array element with a sequence
 
 
 >>> matrix_mul([[]], [[6], ()])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence.
 
 
 >>> matrix_mul([[81], [""]], [[6], (), [8]])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence
 
 
 >>> matrix_mul([[81], [92]], [7, [6], [()]])
@@ -105,19 +105,19 @@ ValueError: setting an array element with a sequence.
 >>> matrix_mul([["7"]], [[]])
 Traceback (most recent call last):
 	  ...
-TypeError: Cannot cast array data from dtype('float64') to dtype('<U32') according to the rule 'safe'
+TypeError: Cannot cast scalar from dtype('bool') to dtype('<U1') according to the rule 'safe'
 
 
 >>> matrix_mul([[5, 6], [6]], [[]])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence.
 
 
 >>> matrix_mul([[81], [""]], [[6], [()]])
 Traceback (most recent call last):
 	  ...
-ValueError: setting an array element with a sequence.
+ValueError: setting an array element with a sequence
 
 
 >>> matrix_mul([[81], [""]], [[81], [""]])
@@ -129,7 +129,7 @@ ValueError: shapes (2,1) and (2,1) not aligned: 1 (dim 1) != 2 (dim 0)
 >>> matrix_mul([[81], [""]], [[6], []])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence
 
 
 >>> matrix_mul([[6], [7]], [[81], [""]])
@@ -153,19 +153,19 @@ ValueError: setting an array element with a sequence.
 >>> matrix_mul([[81, 5], [92]], [[6], [7]])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence.
 
 
 >>> matrix_mul([[81, 5], [92]], [[6], []])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence.
 
 
 >>> matrix_mul([[81], [92]], [[6], []])
 Traceback (most recent call last):
 	  ...
-TypeError: Object arrays are not currently supported
+ValueError: setting an array element with a sequence.
 
 
 >>> matrix_mul([[61]], [[81], [92]])
