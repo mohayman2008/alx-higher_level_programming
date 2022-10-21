@@ -27,7 +27,7 @@ void print_python_string(PyObject *p)
 
 	if (!PyUnicode_Check(p))
 	{
-		fprintf(stdout, "  [ERROR] Invalid Bytes Object\n");
+		fprintf(stdout, "  [ERROR] Invalid String Object\n");
 		return;
 	}
 
