@@ -7,6 +7,10 @@ class BaseGeometry:
     """BaseGeometry class
     """
 
+    def __init__(self):
+        """Initializer"""
+        pass
+
     def area(self):
         """Blueprint method"""
         raise Exception("area() is not implemented")
