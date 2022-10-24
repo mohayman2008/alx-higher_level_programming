@@ -80,3 +80,25 @@ TypeError: integer_validator() takes 3 positional arguments but 4 were given
 
 
 >>> BaseGeometry.integer_validator(b, "hello", 22)
+
+
+
+
+# BaseGeometry.area(self)
+
+>>> BaseGeometry.area(b)
+Traceback (most recent call last):
+	  ...
+Exception: area() is not implemented
+
+
+>>> BaseGeometry.area()
+Traceback (most recent call last):
+	  ...
+TypeError: area() missing 1 required positional argument: 'self'
+
+
+>>> b.area(b)
+Traceback (most recent call last):
+	  ...
+TypeError: area() takes 1 positional argument but 2 were given
