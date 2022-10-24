@@ -8,6 +8,7 @@ class MyList(list):
     """
 
     def print_sorted(self):
+        """Print a sorted version of the list"""
         new = self.copy()
         new.sort()
         print(new)
