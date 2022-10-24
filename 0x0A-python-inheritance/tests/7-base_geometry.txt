@@ -55,6 +55,18 @@ Traceback (most recent call last):
 TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
 
 
+>>> BaseGeometry.integer_validator()
+Traceback (most recent call last):
+	  ...
+TypeError: integer_validator() missing 3 required positional arguments: 'self', 'name', and 'value'
+
+
+>>> b.integer_validator("namesss", 5, 55)
+Traceback (most recent call last):
+	  ...
+TypeError: integer_validator() takes 3 positional arguments but 4 were given
+
+
 >>> b.integer_validator("my_var", 7)
 
 
@@ -62,3 +74,9 @@ TypeError: integer_validator() missing 2 required positional arguments: 'name' a
 
 
 >>> b.integer_validator((), 7)
+
+
+>>> b.integer_validator("", 7)
+
+
+>>> BaseGeometry.integer_validator(b, "hello", 22)
