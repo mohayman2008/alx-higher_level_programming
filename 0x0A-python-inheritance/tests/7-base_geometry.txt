@@ -28,7 +28,7 @@ TypeError: namesss must be an integer
 >>> b.integer_validator((), ())
 Traceback (most recent call last):
 	  ...
-TypeError: () must be an integer
+TypeError: name must be a string
 
 
 >>> b.integer_validator("ok", -3)
@@ -74,6 +74,9 @@ TypeError: integer_validator() takes 3 positional arguments but 4 were given
 
 
 >>> b.integer_validator((), 7)
+Traceback (most recent call last):
+	  ...
+TypeError: name must be a string
 
 
 >>> b.integer_validator("", 7)
