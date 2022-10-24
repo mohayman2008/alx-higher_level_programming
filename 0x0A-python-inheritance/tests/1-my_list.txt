@@ -1,0 +1,79 @@
+# MyList.print_sorted(self)
+# Traceback (most recent call last):
+
+>>> MyList = __import__('1-my_list').MyList
+>>> m = MyList([3, 2, 1])
+>>> m.print_sorted()
+[1, 2, 3]
+>>> print(m)
+[3, 2, 1]
+
+
+>>> m = MyList([])
+>>> m.print_sorted()
+[]
+>>> print(m)
+[]
+
+
+>>> m = MyList([5, 10, 300])
+>>> m.print_sorted()
+[5, 10, 300]
+
+
+>>> m = MyList([3000, 1, 2, 3])
+>>> m.print_sorted()
+[1, 2, 3, 3000]
+>>> print(m)
+[3000, 1, 2, 3]
+
+
+>>> m = MyList([1, 2, 3, 4, 5, 6, 7, 8, 10, 9])
+>>> m.print_sorted()
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+>>> print(m)
+[1, 2, 3, 4, 5, 6, 7, 8, 10, 9]
+
+
+>>> m = MyList([1, 2, 3, 4, 5, 6.2, 7, 8, 10.005, 9.9])
+>>> m.print_sorted()
+[1, 2, 3, 4, 5, 6.2, 7, 8, 9.9, 10.005]
+>>> print(m)
+[1, 2, 3, 4, 5, 6.2, 7, 8, 10.005, 9.9]
+
+
+>>> m = MyList(["book", "boom", "boof", ""])
+>>> m.print_sorted()
+['', 'boof', 'book', 'boom']
+>>> print(m)
+['book', 'boom', 'boof', '']
+
+
+>>> m = MyList([["book"], ["boom"], ["boof"], ("",)])
+>>> try:
+...	m.print_sorted()
+... except Exception as e:
+... 	print(e.__class__.__name__)
+TypeError
+>>> print(m)
+[['book'], ['boom'], ['boof'], ('',)]
+
+
+>>> m = MyList([[], [], [], [[]]])
+>>> m.print_sorted()
+[[], [], [], [[]]]
+>>> print(m)
+[[], [], [], [[]]]
+
+
+>>> m = MyList([[[]], [], [], []])
+>>> m.print_sorted()
+[[], [], [], [[]]]
+>>> print(m)
+[[[]], [], [], []]
+
+
+>>> MyList.print_sorted()
+Traceback (most recent call last):
+	  ...
+TypeError: print_sorted() missing 1 required positional argument: 'self'
