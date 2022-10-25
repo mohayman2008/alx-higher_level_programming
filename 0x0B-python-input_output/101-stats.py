@@ -23,7 +23,7 @@ def main():
     try:
         for line in sys.stdin:
             info = line.strip().split(" ")
-            if len(info) > 1:
+            if type(info) is list and len(info) > 1:
                 size += int(info[-1])
                 codes_count[int(info[-2])] += 1
                 count += 1
