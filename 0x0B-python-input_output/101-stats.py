@@ -25,7 +25,9 @@ def main():
             info = line.strip().split(" ")
             if type(info) is list and len(info) > 1:
                 size += int(info[-1])
-                codes_count[int(info[-2])] += 1
+                code = int(info[-2])
+                if code in codes:
+                    codes_count[code] += 1
                 count += 1
             if count % 10 == 0:
                 print_stats(size, codes, codes_count)
