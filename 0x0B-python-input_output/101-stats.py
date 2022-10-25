@@ -24,11 +24,14 @@ def main():
         for line in sys.stdin:
             info = line.strip().split(" ")
             if type(info) is list and len(info) > 1:
-                size += int(info[-1])
-                code = int(info[-2])
-                if code in codes:
-                    codes_count[code] += 1
-                count += 1
+                try:
+                    size += int(info[-1])
+                    code = int(info[-2])
+                    if code in codes_count:
+                        codes_count[code] += 1
+                    count += 1
+                except Exception:
+                    pass
             if count % 10 == 0:
                 print_stats(size, codes, codes_count)
     except KeyboardInterrupt:
