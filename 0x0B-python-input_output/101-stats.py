@@ -9,7 +9,7 @@ def print_stats(size, codes, codes_count):
     for code in codes:
         code_count = codes_count[code]
         if code_count > 0:
-            sys.stdout.write("{}: {}\n".format(code, code_count))
+            sys.stdout.write("{:d}: {:d}\n".format(code, code_count))
     sys.stdout.flush()
     pass
 
@@ -22,15 +22,17 @@ def main():
     codes_count = {code: 0 for code in codes}
     try:
         for line in sys.stdin:
-            info = line.split()
-            size += int(info[-1])
-            codes_count[int(info[-2])] += 1
-            count += 1
+            info = line.strip().split(" ")
+            if len(info) > 1:
+                size += int(info[-1])
+                codes_count[int(info[-2])] += 1
+                count += 1
             if count % 10 == 0:
                 print_stats(size, codes, codes_count)
-    except KeyboardInterrupt as e:
+    except KeyboardInterrupt:
         print_stats(size, codes, codes_count)
-        raise e
+        raise
+    print_stats(size, codes, codes_count)
     pass
 
 
