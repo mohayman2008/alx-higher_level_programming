@@ -5,5 +5,6 @@ import json
 
 def from_json_string(my_str):
     """Returns a python object represented by a JSON string"""
-    json.loads(my_str)
+    if type(my_str) is not str:
+        return
     return eval(str(json.loads(my_str)))
