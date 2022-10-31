@@ -29,7 +29,7 @@ class Base:
         """Returns the JSON string representation of a list of dictionaries"""
         # if (type(list_dictionaries) is not list)
         # or not len(list_dictionaries):
-        if list_dictionaries is None or not len(list_dictionaries):
+        if list_dictionaries is None or list_dictionaries == []:
             return json.dumps([])
         try:
             return json.dumps(list_dictionaries)  # , ensure_ascii=False)
