@@ -20,7 +20,11 @@ class Base:
     def create(cls, **dictionary):
         """Returns an instance of class cls with attributes set
         according to dictionary"""
-        obj = cls(10, 10, id=80000)
+        if cls.__name__ == "Square":
+            obj = cls(10, 5, 5)
+        elif cls.__name__ == "Rectangle":
+            obj = cls(10, 10, 5, 5)
+        # obj = cls(10, 10, id=80000)
         obj.update(**dictionary)
         return obj
 
