@@ -29,12 +29,10 @@ class Base:
         """Returns the JSON string representation of a list of dictionaries"""
         if list_dictionaries is None or list_dictionaries == []:
             return "[]"
-        return json.dumps(list_dictionaries)
-        """
-        if list_dictionaries is None or list_dictionaries == []:
+        if type(list_dictionaries) is not list or\
+           any(type(x) is not dict for x in list_dictionaries):
             return "[]"
         return json.dumps(list_dictionaries)
-        """
 
     @staticmethod
     def from_json_string(json_string):
