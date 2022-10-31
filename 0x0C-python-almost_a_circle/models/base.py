@@ -30,9 +30,9 @@ class Base:
         # if (type(list_dictionaries) is not list)
         # or not len(list_dictionaries):
         if list_dictionaries is None or list_dictionaries == []:
-            return json.dumps([])
+            return '[]'
         try:
-            return json.dumps(list_dictionaries)  # , ensure_ascii=False)
+            return json.dumps(list_dictionaries)
         except TypeError:
             return json.dumps([])
 
