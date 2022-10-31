@@ -32,7 +32,7 @@ class Base:
         if list_dictionaries is None or not len(list_dictionaries):
             return json.dumps([])
         try:
-            return json.dumps(list_dictionaries, ensure_ascii=False)
+            return json.dumps(list_dictionaries)  # , ensure_ascii=False)
         except TypeError:
             return json.dumps([])
 
