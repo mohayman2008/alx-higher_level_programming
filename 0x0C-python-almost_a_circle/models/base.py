@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module contains the definition of the Base class"""
 import json
+import csv
 
 
 class Base:
@@ -28,7 +29,6 @@ class Base:
             obj = cls(10)
         elif cls.__name__ == "Rectangle":
             obj = cls(10, 10)
-        # obj = cls(10, 10, id=80000)
         obj.update(**dictionary)
         return obj
 
@@ -71,10 +71,39 @@ class Base:
         try:
             with open(filename, 'r', encoding='utf-8') as f:
                 list_dicts = cls.from_json_string(f.read())
-                for dictionary in list_dicts:
-                    list_objs.append(cls.create(**dictionary))
-                return list_objs
+            return [cls.create(**d) for d in list_dicts]
         except (FileNotFoundError, json.JSONDecodeError) as e:
             return list()
+        pass
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Writes the csv representation of a list of objects of class cls
+        to a file"""
+        filename = "{}.csv".format(cls.__name__)
+        if cls.__name__ == "Square":
+            fields = ("id", "size", "x", "y")
+        elif cls.__name__ == "Rectangle":
+            fields = ("id", "width", "height", "x", "y")
+
+        if type(list_objs) is not list:
+            list_dicts = []
+        else:
+            list_dicts = [obj.to_dictionary() for obj in list_objs]
+        with open(filename, 'w', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fields)
+            writer.writeheader()
+            writer.writerows(list_dicts)
+        pass
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Returns a list of instances of class cls by loading from
+        respective csv file"""
+        filename = "{}.csv".format(cls.__name__)
+        with open(filename, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            list_dicts = [{k: int(v) for k, v in d.items()} for d in reader]
+        return [cls.create(**d) for d in list_dicts]
         pass
     pass
