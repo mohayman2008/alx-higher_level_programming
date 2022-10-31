@@ -30,11 +30,11 @@ class Base:
         # if (type(list_dictionaries) is not list)
         # or not len(list_dictionaries):
         if list_dictionaries is None or list_dictionaries == []:
-            return '[]'
-        try:
-            return json.dumps(list_dictionaries)
-        except TypeError:
-            return json.dumps([])
+            return "[]"
+        # try:
+        return json.dumps(list_dictionaries)
+        # except TypeError:
+        #     return json.dumps([])
 
     @staticmethod
     def from_json_string(json_string):
