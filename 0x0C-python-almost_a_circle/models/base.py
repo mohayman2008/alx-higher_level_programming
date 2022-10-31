@@ -106,4 +106,9 @@ class Base:
             list_dicts = [{k: int(v) for k, v in d.items()} for d in reader]
         return [cls.create(**d) for d in list_dicts]
         pass
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """Draws Rectangles in list_rectangles and Squares in list_squares"""
+        pass
     pass
