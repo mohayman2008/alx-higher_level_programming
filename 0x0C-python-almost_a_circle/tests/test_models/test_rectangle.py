@@ -280,10 +280,27 @@ class TestRectangle(unittest.TestCase):
         self.assertTrue(len(rects) == len(outputs))
 
         i = 0
-        for rect in rects[:3]:
+        for rect in rects:
             self.assertEqual(rect.area(), outputs[i])
             i += 1
-
         pass
+
+    def test_to_dictionary(self):
+        """Tests for to_dictionary() method"""
+        R = Rectangle
+        rects = [R(2, 2, 1, 5, 30), R(1, 5, 7, 9, 30), R(5, 1, id=[]),
+                 R(1, 1, 1, id=30), R(31241546, 56433446, 5416, 645, 3150666)]
+        outputs = [{'id': 30, 'width': 2, 'height': 2, 'x': 1, 'y': 5},
+                   {'id': 30, 'width': 1, 'height': 5, 'x': 7, 'y': 9},
+                   {'id': [], 'width': 5, 'height': 1, 'x': 0, 'y': 0},
+                   {'id': 30, 'width': 1, 'height': 1, 'x': 1, 'y': 0},
+                   {'id': 3150666, 'width': 31241546, 'height': 56433446,
+                    'x': 5416, 'y': 645}]
+        self.assertTrue(len(rects) == len(outputs))
+
+        i = 0
+        for rect in rects[:3]:
+            self.assertEqual(rect.to_dictionary(), outputs[i])
+            i += 1
 
     pass
