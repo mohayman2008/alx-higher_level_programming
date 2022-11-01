@@ -2,6 +2,7 @@
 """This module contains the definition of the Base class"""
 import json
 import csv
+import turtle
 
 
 class Base:
@@ -110,5 +111,42 @@ class Base:
     @staticmethod
     def draw(list_rectangles, list_squares):
         """Draws Rectangles in list_rectangles and Squares in list_squares"""
+        WIDTH, HEIGHT = 800, 600
+
+        screen = turtle.Screen()
+        screen.setup(WIDTH, HEIGHT)
+        screen.screensize(WIDTH + 4, HEIGHT + 8)
+        screen.setworldcoordinates(-2, HEIGHT + 4, WIDTH + 2, -4)
+
+        rects = []
+        for l in (list_rectangles, list_squares):
+            if type(l) is list:
+                rects += l
+        colors = ("red", "green", "blue", "black", "grey", "orange",
+                  "purple")
+        tu = turtle.Turtle()
+        turtle.screensize(600, 450)
+        tu.screen.bgcolor("white")
+        tu.pensize(3)
+        tu.shape("turtle")
+
+        count = 0
+        for r in rects:
+            tu.up()
+            tu.goto(r.x, r.y)
+            tu.color(colors[count % len(colors)])
+            tu.fillcolor(colors[len(colors) - 1 - count % len(colors)])
+            tu.showturtle()
+            tu.down()
+            for i in range(2):
+                tu.forward(r.width)
+                tu.right(90)
+                tu.forward(r.height)
+                tu.right(90)
+            tu.hideturtle()
+            count += 1
+
+        # turtle.done()
+        turtle.exitonclick()
         pass
     pass
