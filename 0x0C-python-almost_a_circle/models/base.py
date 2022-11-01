@@ -119,9 +119,9 @@ class Base:
         screen.setworldcoordinates(-2, HEIGHT + 4, WIDTH + 2, -4)
 
         rects = []
-        for l in (list_rectangles, list_squares):
-            if type(l) is list:
-                rects += l
+        for l_obj in (list_rectangles, list_squares):
+            if type(l_obj) is list:
+                rects += l_obj
         colors = ("red", "green", "blue", "black", "grey", "orange",
                   "purple")
         tu = turtle.Turtle()
