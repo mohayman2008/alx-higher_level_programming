@@ -11,30 +11,29 @@ except BaseException as e:
     unittest.TestCase.fail(f"Exception [{e}] raised unexpectedly!")
 
 try:
-    suite = __import__("test_models.__init__", fromlist=[None])
+    Counts = __import__("test_models.__init__", fromlist=[None]).Counts
 except Exception:
     try:
-        suite = __import__("__init__")
+        Counts = __import__("__init__").Counts
     except Exception:
-        suite = __import__("tests.test_models.__init__", fromlist=[None])
+        Counts = __import__("tests.test_models.__init__",
+                            fromlist=[None]).Counts
 
 
 class TestSquare(unittest.TestCase):
     """Tests for class Square"""
 
-    def init_square_count(self):
-        """Sync the Square objects count"""
-        if not suite.square_count and suite.rect_count:
-            suite.square_count = suite.rect_count
-        pass
-
     def test_init(self):
         """Initialization tests"""
         # self.id tests
-        self.init_square_count()
+        Counts.init_square_count()
+        Counts.init_rect_count()
         S, R = (Square, Rectangle)
-        last, last_rect, last_base = (suite.square_count, suite.rect_count,
-                                      suite.base_count)
+        last, last_rect, last_base = (Counts.square_count, Counts.rect_count,
+                                      Counts.base_count)
+        if Counts.rect_count == 0:
+            Counts.rect_count = 1
+            last_rect = 1
         squares = [S(10), S(10), S(10), Base(), R(1, 1), S(10, id=20),
                    S(10, id="ss"), S(10, id=[]), S(10), R(1, 1), Base()]
         ids = [last + 1, last + 2, last + 3, last_base + 1, last_rect + 1, 20,
@@ -48,9 +47,9 @@ class TestSquare(unittest.TestCase):
             i += 1
         s1 = S(1, 1)
         self.assertEqual(s1.id, last + 5)
-        suite.square_count += 5
-        suite.base_count += 2
-        suite.rect_count += 2
+        Counts.square_count += 5
+        Counts.base_count += 2
+        Counts.rect_count += 2
 
         # Raises
         # size
@@ -68,14 +67,14 @@ class TestSquare(unittest.TestCase):
 
     def test_set_get(self):
         """Tests for setters and getters"""
-        self.init_square_count()
-        S, last = (Square, suite.square_count)
+        Counts.init_square_count()
+        S, last = (Square, Counts.square_count)
         squares = [S(4), S(10, 5), S(10, 5, 5), S(10, 5, 0), S(10, 0, 5),
                    S(10, 0, 0), S(10, id=20), S(10, 3, id=205),
                    S(10, 3, 2, id=35), S(10, 3, 2, 11), S(10, 0, 0, 30)]
         ids = [last + 1, last + 2, last + 3, last + 4, last + 5, last + 6,
                20, 205, 35, 11, 30]
-        suite.square_count += 6
+        Counts.square_count += 6
         size_vals = [4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
         x_vals = [0, 5, 5, 5, 0, 0, 0, 3, 3, 3, 0]
         y_vals = [0, 0, 5, 0, 5, 0, 0, 0, 2, 2, 0]
@@ -238,5 +237,77 @@ class TestSquare(unittest.TestCase):
         for sq in squares:
             self.assertEqual(sq.to_dictionary(), outputs[i])
             i += 1
+        pass
+
+    def test_create(self):
+        """Tests for classmethod create()"""
+        # Raises
+        S = Square
+        Counts.init_square_count()
+        dicts = ({"size": "5"}, {"size": 0}, {"size": -2}, {"x": "5"},
+                 {"x": -2}, {"y": "5"}, {"y": -2})
+        # size
+        self.assertRaisesRegex(TypeError, "width must be an integer",
+                               S.create, **dicts[0])
+        self.assertRaisesRegex(ValueError, "width must be > 0",
+                               S.create, **dicts[1])
+        self.assertRaisesRegex(ValueError, "width must be > 0",
+                               S.create, **dicts[2])
+        # x
+        self.assertRaisesRegex(TypeError, "x must be an integer",
+                               S.create, **dicts[3])
+        self.assertRaisesRegex(ValueError, "x must be >= 0",
+                               S.create, **dicts[4])
+        # y
+        self.assertRaisesRegex(TypeError, "y must be an integer",
+                               S.create, **dicts[5])
+        self.assertRaisesRegex(ValueError, "y must be >= 0",
+                               S.create, **dicts[6])
+        Counts.square_count += len(dicts)
+
+        # Check cases where invalid types are passed to create
+        with self.assertRaises(TypeError):
+            S.create(**"")
+        with self.assertRaises(TypeError):
+            S.create("")
+        with self.assertRaises(TypeError):
+            S.create(None)
+
+        # Default dummy values used: size = 10
+        DS = 10
+        last = Counts.square_count
+        dicts = [{}, {"id": "hs"}, {"id": 300, "size": 8},
+                 {"id": 300, "size": 8, "x": 0},
+                 {"id": 500, "size": 2, "x": 6, "y": 5},
+                 {"size": 8}, {"x": 2}, {"y": 3}]
+        ids = [last + 1, "hs", 300, 300, 500, last + 6, last + 7, last + 8]
+        size_vals = [DS, DS, 8, 8, 2, 8, DS, DS]
+        x_vals = [0, 0, 0, 0, 6, 0, 2, 0]
+        y_vals = [0, 0, 0, 0, 5, 0, 0, 3]
+        vals = (ids, size_vals, x_vals, y_vals)
+        self.assertTrue(all(len(x) == len(dicts) for x in vals))
+
+        i = 0
+        for d in dicts:
+            sq = S.create(**d)
+            self.assertEqual(sq.id, ids[i])
+            self.assertEqual(sq.size, size_vals[i])
+            self.assertEqual(sq.x, x_vals[i])
+            self.assertEqual(sq.y, y_vals[i])
+            i += 1
+        Counts.square_count += len(dicts)
+
+        # Check that not ordered **kwargs are assigned correctly
+        sq = S.create(x=17, size=60, id=50, y=12)
+        self.assertEqual(sq.size, 60)
+        self.assertEqual(sq.x, 17)
+        self.assertEqual(sq.y, 12)
+        self.assertEqual(sq.id, 50)
+
+        # Check that invalid attributes are not assigned
+        sq = S.create(hello="world")
+        self.assertNotIn("hello", sq.__dict__)
+
+        Counts.square_count += 2
         pass
     pass

@@ -2,7 +2,10 @@
 """This module contains the definition of the Base class"""
 import json
 import csv
-import turtle
+try:
+    import turtle
+except ModuleNotFoundError:
+    pass
 
 
 class Base:
@@ -22,7 +25,7 @@ class Base:
     def create(cls, **dictionary):
         """Returns an instance of class cls with attributes set
         according to dictionary"""
-        if type(dictionary) is not dict or not len(dictionary):
+        if type(dictionary) is not dict:  # or not len(dictionary):
             return None
         if cls.__name__ not in ("Square", "Rectangle"):
             return None
@@ -102,7 +105,7 @@ class Base:
         """Returns a list of instances of class cls by loading from
         respective csv file"""
         filename = "{}.csv".format(cls.__name__)
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, 'r', encoding='utf-8', newline='') as f:
             reader = csv.DictReader(f)
             list_dicts = [{k: int(v) for k, v in d.items()} for d in reader]
         return [cls.create(**d) for d in list_dicts]
@@ -111,6 +114,8 @@ class Base:
     @staticmethod
     def draw(list_rectangles, list_squares):
         """Draws Rectangles in list_rectangles and Squares in list_squares"""
+        if "turtle" not in dir:
+            return
         WIDTH, HEIGHT = 800, 600
 
         screen = turtle.Screen()

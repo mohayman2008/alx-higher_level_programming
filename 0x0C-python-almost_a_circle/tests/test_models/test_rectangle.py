@@ -8,25 +8,21 @@ import sys
 try:
     from models import Base, Rectangle
 except BaseException as e:
+    print("||FAILURE||")
     unittest.TestCase.fail(f"Exception [{e}] raised unexpectedly!")
 
 try:
-    suite = __import__("test_models.__init__", fromlist=[None])
+    Counts = __import__("test_models.__init__", fromlist=[None]).Counts
 except Exception:
     try:
-        suite = __import__("__init__")
+        Counts = __import__("__init__").Counts
     except Exception:
-        suite = __import__("tests.test_models.__init__", fromlist=[None])
+        Counts = __import__("tests.test_models.__init__",
+                            fromlist=[None]).Counts
 
 
 class TestRectangle(unittest.TestCase):
     """Tests for class Base"""
-
-    def init_rect_count(self):
-        """Sync the Rectangle objects count"""
-        if not suite.rect_count and suite.base_count:
-            suite.rect_count = suite.base_count
-        pass
 
     def test_validation(self):
         """Unit tests for validation methods"""
@@ -64,8 +60,8 @@ class TestRectangle(unittest.TestCase):
         """Initialization tests"""
         # self.id tests
 
-        self.init_rect_count()
-        R, last, last_base = (Rectangle, suite.rect_count, suite.base_count)
+        Counts.init_rect_count()
+        R, last, last_base = (Rectangle, Counts.rect_count, Counts.base_count)
         rects = [R(10, 10), R(10, 10), R(10, 10), Base(), R(10, 10, id=20),
                  R(10, 10, id="ss"), R(10, 10, id=[]), R(10, 10), Base()]
         ids = [last + 1, last + 2, last + 3, last_base + 1, 20, 'ss', [],
@@ -79,8 +75,8 @@ class TestRectangle(unittest.TestCase):
             i += 1
         r1 = R(1, 1)
         self.assertEqual(r1.id, last + 5)
-        suite.rect_count += 5
-        suite.base_count += 2
+        Counts.rect_count += 5
+        Counts.base_count += 2
 
         # Raises
         # width
@@ -111,15 +107,15 @@ class TestRectangle(unittest.TestCase):
 
     def test_set_get(self):
         """Tests for setters and getters"""
-        self.init_rect_count()
-        R, last = (Rectangle, suite.rect_count)
+        Counts.init_rect_count()
+        R, last = (Rectangle, Counts.rect_count)
         rects = [R(4, 8), R(10, 10, 5), R(10, 10, 5, 5), R(10, 10, 5, 0),
                  R(10, 10, 0, 5), R(10, 10, 0, 0), R(10, 10, id=20),
                  R(10, 10, 3, id=205), R(10, 10, 3, 2, id=35),
                  R(10, 10, 3, 2, 11), R(10, 10, 0, 0, 30)]
         ids = [last + 1, last + 2, last + 3, last + 4, last + 5, last + 6,
                20, 205, 35, 11, 30]
-        suite.rect_count += 6
+        Counts.rect_count += 6
         width_vals = [4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
         height_vals = [8, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
         x_vals = [0, 5, 5, 5, 0, 0, 0, 3, 3, 3, 0]
@@ -302,5 +298,94 @@ class TestRectangle(unittest.TestCase):
         for rect in rects[:3]:
             self.assertEqual(rect.to_dictionary(), outputs[i])
             i += 1
+        pass
+
+    def test_create(self):
+        """Tests for classmethod create()"""
+        # Raises
+        R = Rectangle
+        Counts.init_rect_count()
+        dicts = ({"width": "5"}, {"width": 0}, {"width": -2}, {"height": "5"},
+                 {"height": 0}, {"height": -2}, {"x": "5"}, {"x": -2},
+                 {"y": "5"}, {"y": -2})
+
+        # size
+        self.assertRaisesRegex(TypeError, "width must be an integer",
+                               R.create, **dicts[0])
+        self.assertRaisesRegex(ValueError, "width must be > 0",
+                               R.create, **dicts[1])
+        self.assertRaisesRegex(ValueError, "width must be > 0",
+                               R.create, **dicts[2])
+        # height
+        self.assertRaisesRegex(TypeError, "height must be an integer",
+                               R.create, **dicts[3])
+        self.assertRaisesRegex(ValueError, "height must be > 0",
+                               R.create, **dicts[4])
+        self.assertRaisesRegex(ValueError, "height must be > 0",
+                               R.create, **dicts[5])
+        # x
+        self.assertRaisesRegex(TypeError, "x must be an integer",
+                               R.create, **dicts[6])
+        self.assertRaisesRegex(ValueError, "x must be >= 0",
+                               R.create, **dicts[7])
+        # y
+        self.assertRaisesRegex(TypeError, "y must be an integer",
+                               R.create, **dicts[8])
+        self.assertRaisesRegex(ValueError, "y must be >= 0",
+                               R.create, **dicts[9])
+        Counts.rect_count += len(dicts)
+
+        # Check cases where invalid types are passed to create
+        with self.assertRaises(TypeError):
+            R.create(**"")
+        with self.assertRaises(TypeError):
+            R.create("")
+        with self.assertRaises(TypeError):
+            R.create(None)
+
+        # Default dummy values used: width = 10 and height = 10
+        DW = 10
+        DH = 10
+        last = Counts.rect_count
+
+        dicts = [{}, {"id": "hs"}, {"id": 300, "width": 8},
+                 {"id": 300, "width": 8, "height": 16},
+                 {"id": 300, "width": 8, "height": 16, "x": 0},
+                 {"id": 500, "width": 2, "height": 2, "x": 6, "y": 5},
+                 {"width": 8}, {"height": 40}, {"x": 2}, {"y": 3}]
+        ids = [last + 1, "hs", 300, 300, 300, 500, last + 7, last + 8,
+               last + 9, last + 10]
+        width_vals = [DW, DW, 8, 8, 8, 2, 8, DW, DW, DW]
+        height_vals = [DH, DH, DH, 16, 16, 2, DH, 40, DH, DH]
+        x_vals = [0, 0, 0, 0, 0, 6, 0, 0, 2, 0]
+        y_vals = [0, 0, 0, 0, 0, 5, 0, 0, 0, 3]
+        vals = (ids, width_vals, height_vals, x_vals, y_vals)
+        self.assertTrue(all(len(x) == len(dicts) for x in vals))
+
+        i = 0
+        for d in dicts:
+            rect = R.create(**d)
+            self.assertEqual(rect.id, ids[i])
+            self.assertEqual(rect.width, width_vals[i])
+            self.assertEqual(rect.height, height_vals[i])
+            self.assertEqual(rect.x, x_vals[i])
+            self.assertEqual(rect.y, y_vals[i])
+            i += 1
+        Counts.rect_count += len(dicts)
+
+        # Check that not ordered **kwargs are assigned correctly
+        rect = R.create(height=304, x=17, width=60, id=50, y=12)
+        self.assertEqual(rect.width, 60)
+        self.assertEqual(rect.x, 17)
+        self.assertEqual(rect.height, 304)
+        self.assertEqual(rect.y, 12)
+        self.assertEqual(rect.id, 50)
+
+        # Check that invalid attributes are not assigned
+        rect = R.create(hello="world")
+        self.assertNotIn("hello", rect.__dict__)
+
+        Counts.rect_count += 2
+        pass
 
     pass
