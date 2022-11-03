@@ -123,7 +123,7 @@ class TestBase(unittest.TestCase, Base):
 
         inputs = ([S(2)], [S(2), S(4, 1, 2, 300)])
         Counts.square_count += 2
-        # Rectangle represented as (id, size, x, y)
+        # Square represented as (id, size, x, y)
         results = ([(last + 1, 2, 0, 0)],
                    [(last + 2, 2, 0, 0), (300, 4, 1, 2)])
 

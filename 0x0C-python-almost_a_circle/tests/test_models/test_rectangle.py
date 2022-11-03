@@ -3,6 +3,7 @@
 import unittest
 from io import StringIO
 import sys
+import os
 
 
 try:
@@ -388,4 +389,42 @@ class TestRectangle(unittest.TestCase):
         Counts.rect_count += 2
         pass
 
+    def test_save_load(self):
+        """Tests for save_to_file() and load_from_file() class method"""
+        # Rectangle save-load tests
+        Counts.init_rect_count()
+        last = Counts.rect_count
+
+        R = Rectangle
+        save, load = Rectangle.save_to_file, Rectangle.load_from_file
+        fn = "Rectangle.json"
+        if os.path.exists(fn):
+            os.remove(fn)
+        self.assertEqual(load(), [])
+
+        for inp in (None, []):
+            save(inp)
+            self.assertEqual(load(), [])
+
+        inputs = ([R(2, 4)], [R(2, 4), R(4, 2, 1, 2, 300)])
+        Counts.rect_count += 2
+        # Rectangle represented as (id, width, height, x, y)
+        results = ([(last + 1, 2, 4, 0, 0)],
+                   [(last + 2, 2, 4, 0, 0), (300, 4, 2, 1, 2)])
+
+        i = 0
+        for inp in inputs:
+            save(inp)
+            rects = load()
+            Counts.rect_count += len(rects)
+            j = 0
+            for rect in rects:
+                self.assertEqual(rect.id, results[i][j][0])
+                self.assertEqual(rect.width, results[i][j][1])
+                self.assertEqual(rect.height, results[i][j][2])
+                self.assertEqual(rect.x, results[i][j][3])
+                self.assertEqual(rect.y, results[i][j][4])
+                j += 1
+            i += 1
+            pass
     pass

@@ -3,6 +3,7 @@
 import unittest
 from io import StringIO
 import sys
+import os
 
 
 try:
@@ -310,4 +311,41 @@ class TestSquare(unittest.TestCase):
 
         Counts.square_count += 2
         pass
+
+    def test_save_load(self):
+        """Tests for save_to_file() and load_from_file() class method"""
+        S = Square
+        Counts.init_square_count()
+        last = Counts.square_count
+
+        save, load = Square.save_to_file, Square.load_from_file
+        fn = "Square.json"
+        if os.path.exists(fn):
+            os.remove(fn)
+        self.assertEqual(load(), [])
+
+        for inp in (None, []):
+            save(inp)
+            self.assertEqual(load(), [])
+
+        inputs = ([S(2)], [S(2), S(4, 1, 2, 300)])
+        Counts.square_count += 2
+        # Square represented as (id, size, x, y)
+        results = ([(last + 1, 2, 0, 0)],
+                   [(last + 2, 2, 0, 0), (300, 4, 1, 2)])
+
+        i = 0
+        for inp in inputs:
+            save(inp)
+            objs = load()
+            Counts.square_count += len(objs)
+            j = 0
+            for obj in objs:
+                self.assertEqual(obj.id, results[i][j][0])
+                self.assertEqual(obj.size, results[i][j][1])
+                self.assertEqual(obj.x, results[i][j][2])
+                self.assertEqual(obj.y, results[i][j][3])
+                j += 1
+            i += 1
+            pass
     pass
