@@ -405,6 +405,7 @@ class TestRectangle(unittest.TestCase):
         for inp in (None, []):
             save(inp)
             self.assertEqual(load(), [])
+            os.remove(fn)
 
         inputs = ([R(2, 4)], [R(2, 4), R(4, 2, 1, 2, 300)])
         Counts.rect_count += 2
@@ -418,6 +419,7 @@ class TestRectangle(unittest.TestCase):
             rects = load()
             Counts.rect_count += len(rects)
             j = 0
+            self.assertNotEqual(len(rects), 0)
             for rect in rects:
                 self.assertEqual(rect.id, results[i][j][0])
                 self.assertEqual(rect.width, results[i][j][1])
@@ -426,5 +428,6 @@ class TestRectangle(unittest.TestCase):
                 self.assertEqual(rect.y, results[i][j][4])
                 j += 1
             i += 1
+            os.remove(fn)
             pass
     pass

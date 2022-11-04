@@ -326,16 +326,8 @@ class TestSquare(unittest.TestCase):
 
         for inp in (None, []):
             save(inp)
-            with open(fn, encoding="utf-8") as f:
-                self.assertEqual(f.read(), '[]')
             self.assertEqual(load(), [])
-
-        sq = S(10)
-        save([sq])
-        with open(fn, encoding="utf-8") as f:
-            self.assertEqual(f.read(), S.to_json_string([sq.to_dictionary()]))
-        Counts.square_count += 1
-        last += 1
+            os.remove(fn)
 
         inputs = ([S(2)], [S(2), S(4, 1, 2, 300)])
         Counts.square_count += 2
@@ -349,6 +341,7 @@ class TestSquare(unittest.TestCase):
             objs = load()
             Counts.square_count += len(objs)
             j = 0
+            self.assertNotEqual(len(objs), 0)
             for obj in objs:
                 self.assertEqual(obj.id, results[i][j][0])
                 self.assertEqual(obj.size, results[i][j][1])
@@ -356,5 +349,6 @@ class TestSquare(unittest.TestCase):
                 self.assertEqual(obj.y, results[i][j][3])
                 j += 1
             i += 1
+            os.remove(fn)
             pass
     pass
