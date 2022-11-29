@@ -114,7 +114,8 @@ class Base:
     @staticmethod
     def draw(list_rectangles, list_squares):
         """Draws Rectangles in list_rectangles and Squares in list_squares"""
-        if "turtle" not in dir:
+        if "turtle" not in globals().keys():
+            print("turtle wasn't found!")
             return
         WIDTH, HEIGHT = 800, 600
 
