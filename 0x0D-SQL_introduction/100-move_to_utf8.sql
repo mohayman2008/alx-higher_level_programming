@@ -1,16 +1,17 @@
--- This script creates the database hbtn_0c_0 in the MySQL server if it's not existing
+-- This script converts hbtn_0c_0 database to UTF8 (utf8mb4, collate utf8mb4_unicode_ci)
 
--- Creates the database hbtn_0c_0 in the MySQL server if it's not existing
--- ALTER DATABASE `hbtn_0c_0`
--- CHARSET=utf8mb4 
--- COLLATE=utf8mb4_unicode_ci;
+-- Select Database 'hbtn_0c_0'
+USE `hbtn_0c_0`;
 
--- -- Creates the database hbtn_0c_0 in the MySQL server if it's not existing
--- ALTER TABLE `first_table`
--- CHARSET=utf8mb4 
--- COLLATE=utf8mb4_unicode_ci;
+-- Convert Database
+ALTER DATABASE `hbtn_0c_0`
+CHARSET=utf8mb4 
+COLLATE=utf8mb4_unicode_ci;
 
--- Hello
-USE `hbtn_0c_0`
+-- Convert Table
 ALTER TABLE `first_table`
-CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CHARSET=utf8mb4 
+COLLATE=utf8mb4_unicode_ci;
+
+---- ALTER TABLE `first_table` ----
+-- CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -1,6 +1,7 @@
--- This script creates the database hbtn_0c_0 in the MySQL server if it's not existing
+-- This script displays the average temperature (Fahrenheit)
+-- by city ordered by temperature (descending) in 'temperatures' table
 
--- Creates the database hbtn_0c_0 in the MySQL server if it's not existing
+-- Execute the query
 SELECT `city`, AVG(`value`) as 'avg_temp'
 FROM `temperatures`
 GROUP BY `city`

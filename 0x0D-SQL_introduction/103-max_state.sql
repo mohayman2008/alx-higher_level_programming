@@ -1,6 +1,7 @@
--- This script creates the database hbtn_0c_0 in the MySQL server if it's not existing
+-- This script displays the max temperature of each state
+-- ordered by 'state' in 'temperatures' table
 
--- Creates the database hbtn_0c_0 in the MySQL server if it's not existing
+-- Execute the query
 SELECT `state`, MAX(`value`) as 'max_temp'
 FROM `temperatures`
 GROUP BY `state`
