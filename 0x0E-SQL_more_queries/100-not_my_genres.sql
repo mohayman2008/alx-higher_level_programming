@@ -1,21 +1,29 @@
 -- This script list all genres not linked to the show 'Dexter'
 -- according to the database 'hbtn_0d_tvshows'
 
--- Query
-SELECT DISTINCT `name`
+-- The query
+SELECT g.`name`
+FROM `tv_shows` AS s
+	INNER JOIN `tv_show_genres` AS sg
+	ON sg.`show_id` = s.`id`
+	AND s.`title` = 'Dexter'
+		RIGHT JOIN `tv_genres` AS g
+		ON sg.`genre_id` = g.`id`
+WHERE s.`title` IS NULL
+ORDER BY g.`name` ASC;
+
+/*
+SELECT `name`
 FROM `tv_genres`
-	INNER JOIN `tv_show_genres`
-	ON `tv_genres`.`id` = `tv_show_genres`.`genre_id`
-		INNER JOIN `tv_shows`
-		ON `tv_show_genres`.`show_id` = `tv_shows`.`id`
-		WHERE `tv_genres`.`name` NOT IN
-			(
-			SELECT `name`
-			FROM `tv_genres`
-				INNER JOIN `tv_show_genres`
-				ON `tv_genres`.`id` = `tv_show_genres`.`genre_id`
-					INNER JOIN `tv_shows`
-					ON `tv_show_genres`.`show_id` = `tv_shows`.`id`
-					WHERE `tv_shows`.`title` = "Dexter"
-			)
-ORDER BY `tv_genres`.`name`;
+WHERE `name` NOT IN
+	(
+		SELECT g.`name`
+		FROM `tv_genres` AS g
+			INNER JOIN `tv_show_genres` AS sg
+			ON sg.`genre_id` = g.`id`
+				INNER JOIN `tv_shows` AS s
+				ON sg.`show_id` = s.`id`
+				AND s.`title` = 'Dexter'
+	)
+ORDER BY `name` ASC;
+*/
