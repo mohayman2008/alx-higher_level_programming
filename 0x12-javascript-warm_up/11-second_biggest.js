@@ -1,10 +1,11 @@
 #!/usr/bin/node
 
-if (process.argv.length <= 3) {
+const argv = process.argv;
+
+if (argv.length < 4) {
   console.log(0);
 } else {
-  const args = process.argv.sort(function (a, b) {a - b})
-    .slice(2, process.argv.length)
-    .sort((a, b) => a - b);
-  console.log(args[args.length - 2]);
+  console.log(argv.slice(2).sort(function (a, b) {
+    return (Number(b) - Number(a));
+  })[1]);
 }
