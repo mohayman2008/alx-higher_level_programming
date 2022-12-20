@@ -24,4 +24,20 @@ module.exports = Rectangle = class Rectangle {
     }
     console.log(out);
   }
+
+  rotate () {
+    if (!this.height || !this.width) {
+      return;
+    } const tmp = this.height;
+    this.height = this.width;
+    this.width = tmp;
+  }
+
+  double () {
+    if (!this.height || !this.width) {
+      return;
+    }
+  this.width *= 2;
+  this.height *= 2;
+  }
 };
