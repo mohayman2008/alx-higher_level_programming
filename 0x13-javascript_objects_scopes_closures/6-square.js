@@ -1,22 +1,25 @@
 #!/usr/bin/node
 
-const Rectangle = class Rectangle {
-  constructor (w, h) {
-    if (w && h && Number(w) > 0 && Number(h) > 0) {
-      this.width = w;
-      this.height = h;
-    }
-  }
+const ParentSquare = require('./5-square');
 
-  print () {
+const Square = class Square extends ParentSquare {
+  /* constructor (size) {
+    super(size);
+  } */
+
+  charPrint (c) {
     if (!this.height || !this.width) {
       return;
     }
+    let chr;
+    if (c) {
+      chr = c;
+    } else { chr = 'X'; }
 
     let out = '';
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
-        out += 'X';
+        out += chr;
       }
       if (i < this.height - 1) {
         out += '\n';
@@ -26,4 +29,4 @@ const Rectangle = class Rectangle {
   }
 };
 
-module.exports = Rectangle;
+module.exports = Square;

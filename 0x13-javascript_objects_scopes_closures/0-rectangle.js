@@ -1,3 +1,5 @@
 #!/usr/bin/node
 
-module.exports = Rectangle = class Rectangle {};
+const Rectangle = class Rectangle {};
+
+module.exports = Rectangle;

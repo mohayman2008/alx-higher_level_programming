@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-module.exports = Rectangle = class Rectangle {
+const Rectangle = class Rectangle {
   constructor (w, h) {
     if (w && h && Number(w) > 0 && Number(h) > 0) {
       this.width = w;
@@ -8,3 +8,5 @@ module.exports = Rectangle = class Rectangle {
     }
   }
 };
+
+module.exports = Rectangle;
