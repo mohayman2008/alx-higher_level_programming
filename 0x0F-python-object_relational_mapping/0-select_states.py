@@ -23,12 +23,13 @@ def main():
 
     db = None
     cur = None
+    kwargs = {"host": "localhost", "port": 3306, "db": "hbtn_0e_0_usa"}
     try:
         if (len(argv) > 3):
-            db = MySQLdb.connect(host="localhost:3306", user=argv[1],
-                                 passwd=argv[2], db=argv[3])
-        else:
-            db = MySQLdb.connect(host="localhost", db="hbtn_0e_0_usa")
+            kwargs["user"] = argv[1]
+            kwargs["passwd"] = argv[2]
+            kwargs["db"] = argv[3]
+        db = MySQLdb.connect(**kwargs)
         cur = db.cursor()
 
     except MySQLdb.Error as e:
