@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This script lists all states from the database hbtn_0e_0_usa"""
+"""This script lists all states whose name start with 'N'
+from the database hbtn_0e_0_usa"""
 import MySQLdb
 
 
@@ -47,11 +48,18 @@ def main():
         WHERE `name` LIKE 'N%'
         ORDER BY `id` ASC
         '''
+        query = '''
+        SELECT *
+        FROM `states`
+        ORDER BY `id` ASC
+        '''
         cur.execute(query)
         table = cur.fetchall()
 
         for row in table:
-            print(row)
+            # print(row)
+            if row[1][0] == 'N':
+                print(row)
     except MySQLdb.Error as e:
         # sql_error(e, db, cur)
         raise e

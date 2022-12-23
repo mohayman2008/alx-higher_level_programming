@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This script lists all states from the database hbtn_0e_0_usa"""
+"""This script lists all states whose name matches the 4th argument,
+from the database hbtn_0e_0_usa"""
 import MySQLdb
 
 
@@ -44,7 +45,7 @@ def main():
         query = '''
         SELECT *
         FROM `states`
-        WHERE `name` = '{:s}'
+        WHERE `name` LIKE '{:s}'
         ORDER BY `id` ASC
         '''
         cur.execute(query.format(argv[4]))

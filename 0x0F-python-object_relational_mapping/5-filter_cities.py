@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This script lists all states from the database hbtn_0e_0_usa"""
+"""This script lists all citiess in a given state passed as argument,
+from the database hbtn_0e_4_usa"""
 import MySQLdb
 
 

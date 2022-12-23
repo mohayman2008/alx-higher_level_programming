@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This script lists all states from the database hbtn_0e_0_usa"""
+"""This script lists all citiess from the database hbtn_0e_4_usa"""
 import MySQLdb
 
 
