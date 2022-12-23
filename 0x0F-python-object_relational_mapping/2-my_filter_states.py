@@ -35,8 +35,8 @@ def main():
         cur = db.cursor()
 
     except MySQLdb.Error as e:
-        # sql_error(e, db, cur)
-        raise e
+        sql_error(e, db, cur)
+        # raise e
 
     if (not db or not cur):
         return
@@ -52,13 +52,15 @@ def main():
         table = cur.fetchall()
 
         for row in table:
-            print(row)
+            # print(row)
+            if row[1][0] == 'N':
+                print(row)
     except MySQLdb.Error as e:
-        # sql_error(e, db, cur)
-        raise e
-    # finally:
-    #     cur.close()
-    #     db.close()
+        sql_error(e, db, cur)
+        # raise e
+    finally:
+        cur.close()
+        db.close()
 
 
 if __name__ == "__main__":
