@@ -42,7 +42,7 @@ def main():
         query = '''
         SELECT *
         FROM `states`
-        WHERE `name`="{}"
+        WHERE `name` = '{:s}'
         ORDER BY `id` ASC
         '''
         cur.execute(query.format(argv[4]))

@@ -42,7 +42,7 @@ def main():
         query = '''
         SELECT *
         FROM `states`
-        WHERE `name` LIKE "N%"
+        WHERE `name` LIKE 'N%'
         ORDER BY `id` ASC
         '''
         cur.execute(query)
