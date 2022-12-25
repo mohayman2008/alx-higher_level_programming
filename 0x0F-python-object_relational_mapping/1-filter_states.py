@@ -26,17 +26,16 @@ def main():
     cur = None
     kwargs = {"host": "localhost", "port": 3306, "db": "hbtn_0e_0_usa"}
     try:
-        # if (len(argv) > 3):
-        kwargs["user"] = argv[1]
-        kwargs["passwd"] = argv[2]
-        kwargs["db"] = argv[3]
+        if (len(argv) > 3):
+            kwargs["user"] = argv[1]
+            kwargs["passwd"] = argv[2]
+            kwargs["db"] = argv[3]
 
         db = MySQLdb.connect(**kwargs)
         cur = db.cursor()
 
     except MySQLdb.Error as e:
-        # sql_error(e, db, cur)
-        raise e
+        sql_error(e, db, cur)
 
     if (not db or not cur):
         return
@@ -48,24 +47,18 @@ def main():
         WHERE `name` LIKE 'N%'
         ORDER BY `id` ASC
         '''
-        query = '''
-        SELECT *
-        FROM `states`
-        ORDER BY `id` ASC
-        '''
+
         cur.execute(query)
         table = cur.fetchall()
 
         for row in table:
-            # print(row)
             if row[1][0] == 'N':
                 print(row)
     except MySQLdb.Error as e:
-        # sql_error(e, db, cur)
-        raise e
-    # finally:
-    #     cur.close()
-    #     db.close()
+        sql_error(e, db, cur)
+    finally:
+        cur.close()
+        db.close()
 
 
 if __name__ == "__main__":
