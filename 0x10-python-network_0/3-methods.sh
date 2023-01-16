@@ -1,3 +1,3 @@
 #!/bin/bash
-# This script sends a request to that URL passed in as an argument, and displays the size of the body of the response
+# This script sends an 'OPTIONS' request to a URL passed in as an argument and displays the allowed request methods
 curl -sIX 'OPTIONS' "$1" | grep 'Allow:' | cut -f 2- -d' '
