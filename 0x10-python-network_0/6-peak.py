@@ -18,6 +18,6 @@ def find_peak(list_of_integers):
     center = int(length / 2)
     if lst[center - 1] < lst[center] > lst[center + 1]:
         return lst[center]
-    if lst[center - 1] > lst[center + 1]:
+    if lst[center - 1] >= lst[center]:
         return find_peak(lst[:center])
     return find_peak(lst[center+1:])
