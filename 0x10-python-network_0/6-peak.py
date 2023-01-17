@@ -4,8 +4,9 @@
 
 def find_peak(list_of_integers):
     '''Finds a peak in a list of unsorted integers'''
-    if not isinstance(list_of_integers, list) or not list_of_integers:
+    if list_of_integers == []:
         return None
+
     lst = list_of_integers
     length = (len(lst))
     if length == 1:
