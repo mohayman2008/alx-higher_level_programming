@@ -7,16 +7,20 @@ def find_peak(list_of_integers):
     if list_of_integers == []:
         return None
 
-    lst = list_of_integers
-    length = (len(lst))
-    if length == 1:
-        return lst[0]
-    if length == 2:
-        return lst[0] if lst[1] < lst[0] else lst[1]
+    length = len(list_of_integers)
+    mid = int(length / 2)
+    li = list_of_integers
 
-    center = int(length / 2)
-    if lst[center - 1] < lst[center] > lst[center + 1]:
-        return lst[center]
-    if lst[center + 1] > lst[center - 1]:
-        return find_peak(lst[center:])
-    return find_peak(lst[:center + 1])
+    if mid - 1 < 0 and mid + 1 >= length:
+        return li[mid]
+    elif mid - 1 < 0:
+        return li[mid] if li[mid] > li[mid + 1] else li[mid + 1]
+    elif mid + 1 >= length:
+        return li[mid] if li[mid] > li[mid - 1] else li[mid - 1]
+
+    if li[mid - 1] < li[mid] > li[mid + 1]:
+        return li[mid]
+
+    if li[mid + 1] > li[mid - 1]:
+        return find_peak(li[mid:])
+    return find_peak(li[:mid])
