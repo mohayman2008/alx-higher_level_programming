@@ -6,25 +6,23 @@
 const argv = process.argv;
 const request = require('request');
 const fs = require('fs');
+const url = require('url');
 
-const url = argv[2];
+const URL = new url.URL(argv[2]);
 const path = argv[3];
 
-// let res;
-
-const errorHandler = function (error) {
+function errorHandler (error) {
   if (error) {
     console.log(error);
   }
-};
+}
 
-request({ url: url }, function (error, response, body) {
+function reqHandler (error, response, body) {
   if (error) {
-    console.log(error);
+    errorHandler(error);
   } else {
     fs.writeFile(path, body, 'utf8', errorHandler);
-    // console.log(res);
-    // res = body;
-    // console.log(res);
   }
-});
+}
+
+request({ url: URL }, reqHandler);

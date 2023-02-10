@@ -7,20 +7,27 @@ const request = require('request');
 
 const url = argv[2];
 
-request({ url: url }, function (error, response, body) {
+request(url, function (error, response, body) {
   if (error) {
     console.log(error);
   } else {
-    const resp = {};
-    const json = JSON.parse(body);
-    for (let i = 0; i < json.length; i++) {
-      if (json[i].completed === true) {
-        if (resp[json[i].userId] === undefined) {
-          resp[json[i].userId] = 0;
+    const out = {};
+    try {
+      const todos = JSON.parse(body);
+      for (const todo of todos) {
+        if (todo.completed) {
+          const userId = todo.userId;
+          if (out[userId] !== undefined) {
+            out[userId] += 1;
+          } else {
+            out[userId] = 1;
+          }
         }
-        resp[json[i].userId]++;
       }
+
+      console.log(out);
+    } catch (err) {
+      console.log('Not a valid JSON was received');
     }
-    console.log(resp);
   }
 });

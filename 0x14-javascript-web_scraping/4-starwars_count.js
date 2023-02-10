@@ -5,15 +5,23 @@
 const argv = process.argv;
 const request = require('request');
 
-const url = argv[2].slice(0, argv[2].search('/films')) + '/people/18';
+const url = argv[2];
+const charUrl = 'https://swapi-api.alx-tools.com/api/people/18/';
 
 request({ url: url }, function (error, response, body) {
   if (error) {
     console.log(error);
   } else {
     try {
-      const charData = JSON.parse(body);
-      console.log(charData.films.length);
+      const films = JSON.parse(body).results;
+
+      let count = 0;
+      for (const film of films) {
+        if (film.characters.indexOf(charUrl) !== -1) {
+          count++;
+        }
+      }
+      console.log(count);
     } catch (err) {
       console.log('Not a valid JSON was received');
     }
