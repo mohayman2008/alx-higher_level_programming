@@ -5,10 +5,8 @@ const url = 'http://swapi.co/api/films/';
 let id = parseInt(process.argv[2], 10);
 let characters = [];
 
-request(url, function (error, response, body) {
-  if (error) {
-    console.log(error);
-  } else {
+request(url, function (err, response, body) {
+  if (err == null) {
     const resp = JSON.parse(body);
     const results = resp.results;
     if (id < 4) {
