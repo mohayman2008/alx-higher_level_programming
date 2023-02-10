@@ -6,7 +6,7 @@ const argv = process.argv;
 const request = require('request');
 
 const url = argv[2];
-const charUrl = 'https://swapi-api.alx-tools.com/api/people/18/';
+const charUrl = 'people/18';
 
 request({ url: url }, function (error, response, body) {
   if (error) {
@@ -17,8 +17,12 @@ request({ url: url }, function (error, response, body) {
 
       let count = 0;
       for (const film of films) {
-        if (film.characters.indexOf(charUrl) !== -1) {
-          count++;
+        const chars = film.characters;
+        for (const char of chars) {
+          if (char.indexOf(charUrl) !== -1) {
+            count++;
+            break;
+          }
         }
       }
       console.log(count);
