@@ -1,4 +1,6 @@
 #!/usr/bin/node
+// The script reads a file and prints its content to stdout
+// The file path is passed as an argument
 
 const argv = process.argv;
 const fs = require('fs');

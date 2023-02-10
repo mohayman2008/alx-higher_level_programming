@@ -1,4 +1,7 @@
 #!/usr/bin/node
+// The script write a string to a file
+//  1st Arg: The file path
+//  2nd Arg: the string to be written to the file
 
 const argv = process.argv;
 const fs = require('fs');

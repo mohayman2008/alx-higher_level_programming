@@ -1,4 +1,6 @@
 #!/usr/bin/node
+// The script prints the title of a Star Wars movie
+// where the episode number passed as an argument
 
 const argv = process.argv;
 const request = require('request');
