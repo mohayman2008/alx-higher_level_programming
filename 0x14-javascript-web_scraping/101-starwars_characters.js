@@ -1,31 +1,42 @@
 #!/usr/bin/node
+// The script prints all the characters of a Star Wars movie
+// where the episode number passed as an argument
 
+const argv = process.argv;
 const request = require('request');
-const url = 'http://swapi.co/api/films/';
-let id = parseInt(process.argv[2], 10);
-let characters = [];
+const url = require('url');
 
-request(url, function (err, response, body) {
-  if (err == null) {
-    const resp = JSON.parse(body);
-    const results = resp.results;
-    if (id < 4) {
-      id += 3;
-    } else {
-      id -= 3;
-    }
-    for (let i = 0; i < results.length; i++) {
-      if (results[i].episode_id === id) {
-        characters = results[i].characters;
-        break;
-      }
-    }
-    for (let j = 0; j < characters.length; j++) {
-      request(characters[j], function (err, response, body) {
-        if (err == null) {
-          console.log(JSON.parse(body).name);
-        }
-      });
+const id = argv[2];
+const URL = new url.URL(`https://swapi-api.alx-tools.com/api/films/${id}`);
+
+async function errorHandler (error) {
+  if (error) {
+    console.log(error);
+  }
+}
+
+function getBodyPromise (options) {
+  return new Promise(function (resolve, reject) {
+    request(options, (error, response, body) => {
+      resolve(body);
+      reject(error);
+    });
+  });
+}
+
+async function printChars (error, response, body) {
+  if (error) {
+    errorHandler(error);
+  } else {
+    // body should be an object
+    const chars = body.characters;
+    for (const char of chars) {
+      const charURL = new url.URL(char);
+      const options = { url: charURL, json: true };
+      const charObj = await getBodyPromise(options);
+      console.log(charObj.name);
     }
   }
-});
+}
+
+request({ url: URL, json: true }, printChars);
