@@ -11,5 +11,5 @@ function main () {
 
   $('DIV#add_item').click(() => { $(mylist).append(item); });
   $('DIV#remove_item').click(() => { $(mylist).children(':last-child').remove(); });
-  $('DIV#clear_list').click(() => { $(mylist).children().remove(); });
+  $('DIV#clear_list').click(() => { $(mylist).empty(); });
 }
